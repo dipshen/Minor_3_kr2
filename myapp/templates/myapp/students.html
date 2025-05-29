@@ -1,0 +1,129 @@
+{% extends 'myapp/base.html' %}
+
+{% block title %}Данные о студентах{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Данные о студентах</h1>
+
+    <!-- Форма добавления студента -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Добавить нового студента</h5>
+        </div>
+        <div class="card-body">
+            <form method="post" class="row g-3">
+                {% csrf_token %}
+                <div class="col-md-4">
+                    <label for="full_name" class="form-label">Имя и Фамилия</label>
+                    <input type="text" class="form-control" id="full_name" name="full_name" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="educational_program" class="form-label">Образовательная программа</label>
+                    <input type="text" class="form-control" id="educational_program" name="educational_program" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="course" class="form-label">Курс</label>
+                    <select class="form-select" id="course" name="course" required>
+                        <option value="">Выберите...</option>
+                        {% for course in courses %}
+                        <option value="{{ course }}">{{ course }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-plus-circle me-1"></i>Добавить
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Фильтры и сортировка -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Фильтры и сортировка</h5>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label for="search" class="form-label">Поиск</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control" id="search" name="search" value="{{ search_query }}" placeholder="Имя или ОП">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="course_filter" class="form-label">Курс</label>
+                    <select class="form-select" id="course_filter" name="course">
+                        <option value="">Все курсы</option>
+                        {% for course in courses %}
+                        <option value="{{ course }}" {% if course_filter == course|stringformat:"i" %}selected{% endif %}>{{ course }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="sort" class="form-label">Сортировать по</label>
+                    <select class="form-select" id="sort" name="sort">
+                        <option value="full_name" {% if sort_by == 'full_name' %}selected{% endif %}>Имени</option>
+                        <option value="educational_program" {% if sort_by == 'educational_program' %}selected{% endif %}>Программе</option>
+                        <option value="course" {% if sort_by == 'course' %}selected{% endif %}>Курсу</option>
+                        <option value="-created_at" {% if sort_by == '-created_at' %}selected{% endif %}>Дате добавления</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end gap-2">
+                    <button type="submit" class="btn btn-primary flex-grow-1">Применить</button>
+                    {% if request.GET %}
+                    <a href="{% url 'myapp:students' %}" class="btn btn-secondary">
+                        <i class="bi bi-x-circle"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Таблица студентов -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">Список студентов</h5>
+            <span class="badge bg-primary">Всего: {{ students|length }}</span>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Имя и Фамилия</th>
+                            <th>Образовательная программа</th>
+                            <th>Курс</th>
+                            <th>Дата добавления</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{ student.full_name }}</td>
+                            <td>{{ student.educational_program }}</td>
+                            <td><span class="badge bg-primary">{{ student.course }} курс</span></td>
+                            <td>{{ student.created_at|date:"d.m.Y H:i" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-muted">
+                                <i class="bi bi-inbox fs-4 d-block mb-2"></i>
+                                Студенты не найдены
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Добавляем иконки Bootstrap -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+{% endblock %} 

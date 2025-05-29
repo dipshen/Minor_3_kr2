@@ -1,0 +1,48 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+
+{% block title %}Мои сокурсники{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Мои сокурсники</h1>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 person-card">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{% static 'images/nast.jpeg' %}" class="img-fluid rounded-start" alt="Ляч Анастасия">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Ляч Анастасия</h5>
+                        <p class="card-text">
+                            <strong>Email:</strong> <a href="mailto:lyach@gmail.com">lyach@gmail.com</a><br>
+                            <strong>Телефон:</strong> <a href="tel:+79915552277">+7 (991) 555-22-77</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 person-card">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{% static 'images/sasha.jpeg' %}" class="img-fluid rounded-start" alt="Зеленкова Александра">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Зеленкова Александра</h5>
+                        <p class="card-text">
+                            <strong>Email:</strong> <a href="mailto:zelen@gmail.com">zelen@gmail.com</a><br>
+                            <strong>Телефон:</strong> <a href="tel:+79901113311">+7 (990) 111-33-11</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

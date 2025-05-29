@@ -1,0 +1,19 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 1.5vw;
+  font-weight: 400;
+}
+h1 {
+  font-size: 2.5vw;
+}
+h2 {
+font-size: 2vw;
+}
+p {
+  font-size: 1.2vw;
+}
+a {
+  margin-right: 5px;
+  text-decoration: none;
+  color: rgb(223, 57, 190);
+}
