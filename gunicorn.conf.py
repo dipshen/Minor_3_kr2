@@ -1,5 +1,5 @@
 # Gunicorn configuration file
-wsgi_app = "minor_3_kr1.wsgi:application"
+wsgi_app = "myproject.wsgi:application"
 workers = 4
 threads = 1
 timeout = 120
